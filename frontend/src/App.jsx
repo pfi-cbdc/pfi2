@@ -3,9 +3,6 @@ import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Lender from './components/Lender';
-import Borrow from './components/Borrow';
-import About from './components/About';
-import Contact from './components/Contact';
 import Login from './components/Login';
 import Signup from './components/Signup';
 
@@ -27,12 +24,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<><Navbar /><Home /></>} />
-          <Route path="/about" element={<><Navbar /><About /></>} />
-          <Route path="/contact" element={<><Navbar /><Contact /></>} />
-          <Route path="/lender" element={<Lender />} />
-          <Route path="/borrow" element={<Borrow />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/lender" element={<><Navbar /><Lender /></>} />
+          <Route path="/login" element={<><Navbar /><Login /></>} />
+          <Route path="/signup" element={<><Navbar /><Signup /></>} />
         </Routes>
       </Router>
     </ThemeProvider>
