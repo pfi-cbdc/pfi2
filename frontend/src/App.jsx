@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import LenderDashboard from './components/LenderDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import Borrower from './pages/Borrower';
 import { Typography } from '@mui/material';
 
 const theme = createTheme({
@@ -38,6 +39,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/lender" element={<Lender />} />
+          <Route path="/borrower" element={<Borrower />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/contact" element={<div style={{ padding: '20px', textAlign: 'center' }}><Typography variant="h4">Contact Us</Typography></div>} />
