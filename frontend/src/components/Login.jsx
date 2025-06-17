@@ -1,7 +1,29 @@
 import { Container, Typography, Box, Paper, TextField, Button, Grid, Link } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 
 const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/users/login/', {
+        username,
+        password,
+      });
+      console.log('Login successful:', response.data);
+      localStorage.setItem('access_token', response.data.access);
+      localStorage.setItem('refresh_token', response.data.refresh);
+      navigate('/lender-dashboard'); // Redirect to lender dashboard after successful login
+    } catch (error) {
+      console.error('Login failed:', error.response ? error.response.data : error.message);
+      alert('Login failed. Please check your credentials.');
+    }
+  };
+
   return (
     <Container maxWidth="sm">
       <Box sx={{ mt: 8 }}>
@@ -13,10 +35,11 @@ const Login = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Email"
+                label="Username"
                 variant="outlined"
-                type="email"
                 required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -26,6 +49,8 @@ const Login = () => {
                 variant="outlined"
                 type="password"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -34,6 +59,7 @@ const Login = () => {
                 color="primary"
                 size="large"
                 fullWidth
+                onClick={handleLogin}
               >
                 Login
               </Button>
