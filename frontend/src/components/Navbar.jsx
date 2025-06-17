@@ -7,13 +7,27 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    setIsLoggedIn(!!token);
+    const checkLoginStatus = () => {
+      const token = localStorage.getItem('access_token');
+      setIsLoggedIn(!!token);
+    };
+
+    // Check status on initial mount
+    checkLoginStatus();
+
+    // Listen for storage changes (e.g., from login/logout actions in other tabs/components)
+    window.addEventListener('storage', checkLoginStatus);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener('storage', checkLoginStatus);
+    };
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    // Manually update state and navigate after clearing storage
     setIsLoggedIn(false);
     navigate('/login');
   };
